@@ -28,6 +28,8 @@ On a `linux/riscv64` host, `make selfhost` can only use the official images if D
 
 For a reliable deployment, run the Multica service on an amd64 or arm64 Linux host and connect to it from the rest of the network. A native RISC-V deployment needs a separately maintained Node.js/Next.js/native-dependency toolchain and is outside the scope of the published images.
 
+For a step-by-step deployment on a RISC-V K3 host using a supported-architecture build machine, see [`docs/self-host-k3-riscv64.md`](docs/self-host-k3-riscv64.md).
+
 ## Anonymous Deployment Telemetry
 
 The self-hosted API server sends one first-party, deployment-level anonymous snapshot per UTC day to the fixed Multica endpoint `https://telemetry.multica.ai/v1/telemetry/events`. This helps maintainers understand which release versions are in use, deployment-size ranges, aggregate run volume, and how many members actively use a deployment. The endpoint is compiled into the server and cannot be redirected through configuration.
