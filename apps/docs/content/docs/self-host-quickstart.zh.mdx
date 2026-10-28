@@ -38,6 +38,10 @@ Multica 使用 Compose v2，也就是 `docker compose`。旧版的 `docker-compo
 
 执行电脑还需要至少一款已经安装并登录的 [AI 编程工具](/providers)，例如 Claude Code、Codex 或 Cursor。第 5 步再安装 Multica CLI。
 
+<Callout type="warning">
+官方自托管 backend 和 web 镜像目前只支持 `linux/amd64` 与 `linux/arm64`，没有 `linux/riscv64` 变体。在 RISC-V 主机上运行 `make selfhost`，需要 Docker 模拟其中一个已发布的平台；Next.js 前端在这种 QEMU 模拟下可能明显变慢。`make selfhost-build` 也不会自动生成原生 RISC-V 前端，因为当前 Node.js 基础镜像和 Next.js 原生依赖没有发布 RISC-V 构建。要稳定部署，请把服务运行在 amd64 或 arm64 主机上，再通过局域网访问。
+</Callout>
+
 <Steps>
 <Step>
 

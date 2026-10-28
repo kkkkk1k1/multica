@@ -38,6 +38,10 @@ Multica uses Compose v2, invoked as `docker compose`. The legacy `docker-compose
 
 The computer also needs at least one [AI coding tool](/providers) installed and logged in, such as Claude Code, Codex, or Cursor. The Multica CLI is installed in step 5.
 
+<Callout type="warning">
+The official self-hosted backend and web images currently support `linux/amd64` and `linux/arm64`. They do not include a `linux/riscv64` variant. On a RISC-V host, `make selfhost` will need Docker to emulate a published platform; this may make the Next.js frontend noticeably slower. `make selfhost-build` does not create a native RISC-V frontend because the current Node.js base image and Next.js native dependencies are not published for RISC-V. For a reliable deployment, run the service on an amd64 or arm64 host and access it over the network.
+</Callout>
+
 <Steps>
 <Step>
 

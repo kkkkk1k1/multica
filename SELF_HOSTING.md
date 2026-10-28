@@ -12,6 +12,22 @@ Deploy Multica on your own infrastructure in minutes.
 
 Each user who runs AI agents locally also installs the **`multica` CLI** and runs the **agent daemon** on their own machine.
 
+## Supported Host Architectures
+
+The official self-hosted Multica backend and web images are currently published for these Linux platforms:
+
+| Platform | Official backend/web images | Notes |
+|----------|-----------------------------|-------|
+| `linux/amd64` | Supported | Published and built on an amd64 runner |
+| `linux/arm64` | Supported | Published and built on an arm64 runner |
+| `linux/riscv64` | Not supported | No official Multica frontend image is published for RISC-V |
+
+The CLI release artifacts also target amd64 and arm64. The database image is published separately; check its own image manifest when choosing a host. The support boundary for the complete self-hosted stack is the backend and frontend image pair.
+
+On a `linux/riscv64` host, `make selfhost` can only use the official images if Docker is configured to emulate one of the published platforms (usually `linux/amd64`). QEMU emulation is useful for a temporary evaluation, but the Next.js server and its native dependencies can be substantially slower under emulation. A Docker build from the checkout (`make selfhost-build`) does not provide a native RISC-V frontend: `Dockerfile.web` still depends on a Node.js base image and Next.js native packages for which this release does not publish a RISC-V build.
+
+For a reliable deployment, run the Multica service on an amd64 or arm64 Linux host and connect to it from the rest of the network. A native RISC-V deployment needs a separately maintained Node.js/Next.js/native-dependency toolchain and is outside the scope of the published images.
+
 ## Anonymous Deployment Telemetry
 
 The self-hosted API server sends one first-party, deployment-level anonymous snapshot per UTC day to the fixed Multica endpoint `https://telemetry.multica.ai/v1/telemetry/events`. This helps maintainers understand which release versions are in use, deployment-size ranges, aggregate run volume, and how many members actively use a deployment. The endpoint is compiled into the server and cannot be redirected through configuration.

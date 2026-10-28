@@ -182,6 +182,15 @@ multica issue runs <issue-id>
 ## Web 应用与自托管服务
 
 <Accordions>
+<Accordion title="在 RISC-V 主机上自托管" id="self-hosting-on-a-riscv-machine" value="self-hosting-on-a-riscv-machine">
+
+官方 `multica-backend` 和 `multica-web` 镜像目前只发布 `linux/amd64` 与 `linux/arm64`。如果 `docker compose pull` 报告 `no matching manifest for linux/riscv64`，说明当前主机架构不在官方镜像支持矩阵中。
+
+安装 binfmt 后，Docker 可以通过 QEMU 运行 amd64 镜像，但这只是模拟方案。Next.js 服务端渲染和原生依赖在模拟下可能明显变慢，因此 RISC-V 主机上的 Web 页面响应较慢是预期现象。使用 `make selfhost-build` 也不会改变目标架构：当前 Node.js 基础镜像和 Next.js 原生依赖没有官方 RISC-V 前端构建。
+
+稳定部署时，请把 Multica 服务迁移到 Linux amd64 或 arm64 主机，再让 RISC-V 机器通过局域网访问。原生 RISC-V 构建需要自行维护兼容的 Node.js、Next.js/SWC 和原生依赖工具链。
+
+</Accordion>
 <Accordion title="实时更新失效" id="realtime-updates-stop-working" value="realtime-updates-stop-working">
 
 运行仍能执行、但评论和状态不能实时出现，通常是 WebSocket 没有连通。

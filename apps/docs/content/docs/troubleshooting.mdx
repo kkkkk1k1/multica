@@ -193,6 +193,15 @@ Until Hermes fixes this upstream, you can avoid the rebuilds by setting `memory.
 ## Web app and self-hosted service
 
 <Accordions>
+<Accordion title="Self-hosting on a RISC-V machine" id="self-hosting-on-a-riscv-machine" value="self-hosting-on-a-riscv-machine">
+
+The official `multica-backend` and `multica-web` images currently publish only `linux/amd64` and `linux/arm64`. If `docker compose pull` reports `no matching manifest for linux/riscv64`, the host architecture is outside the published image matrix.
+
+Docker can run an amd64 image through QEMU when binfmt support is installed, but this is an emulation workaround. Next.js server-side rendering and native packages can be much slower under emulation, so a slow web page on a RISC-V host is expected. Building with `make selfhost-build` does not change the architecture: the current Node.js base image and Next.js native dependencies do not provide an official RISC-V frontend build.
+
+For a stable deployment, move the Multica service to a Linux amd64 or arm64 host and keep the RISC-V machine as a client on the same network. A native RISC-V build requires maintaining a compatible Node.js, Next.js/SWC, and native dependency toolchain.
+
+</Accordion>
 <Accordion title="Realtime updates stop working" id="realtime-updates-stop-working" value="realtime-updates-stop-working">
 
 If runs still execute but comments and status changes no longer appear live, the WebSocket is usually not connected.
